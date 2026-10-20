@@ -1,0 +1,102 @@
+<div class="app-layout">
+  <!-- Top Navigation & Status Header -->
+  <app-header 
+    (openCitySelector)="showCitySelector.set(true)"
+    (openAddPoint)="showAddPoint.set(true)"
+    (openGuide)="showGuide.set(true)"
+  ></app-header>
+
+  <!-- Main Split-Screen Workspace -->
+  <main class="main-content" [class.mobile-view-map]="mobileActiveView() === 'map'">
+    <!-- Left Pane: Search, Category Filters and Support Points List -->
+    <section class="pane-list" [class.active-mobile]="mobileActiveView() === 'list'">
+      <app-points-list
+        (pointSelected)="onPointSelected($event)"
+        (openDetailModal)="onOpenDetail($event)"
+        (openAddPoint)="showAddPoint.set(true)"
+      ></app-points-list>
+    </section>
+
+    <!-- Right Pane: Interactive OpenStreetMap with Humanitarian Markers -->
+    <section class="pane-map" [class.active-mobile]="mobileActiveView() === 'map'">
+      <app-map-view
+        (pointSelected)="onPointSelected($event)"
+      ></app-map-view>
+
+      <!-- Floating Mobile Point Preview Card when in Map View -->
+      @if (mobileActiveView() === 'map' && pointsService.selectedPoint(); as selected) {
+        <div class="mobile-map-preview-card" (click)="onOpenDetail(selected)">
+          <div class="preview-header">
+            <span class="preview-cat">{{ selected.categoryLabel }}</span>
+            @if (selected.distanceKm !== undefined) {
+              <span class="preview-dist">{{ geoService.formatDistance(selected.distanceKm) }}</span>
+            }
+          </div>
+          <h4 class="preview-title">{{ selected.name }}</h4>
+          <p class="preview-addr">{{ selected.address }}</p>
+          <button class="preview-btn-detail">
+            <span>Ver Detalhes & Doar</span>
+            <app-icon name="heart" [size]="14"></app-icon>
+          </button>
+        </div>
+      }
+    </section>
+  </main>
+
+  <!-- Mobile Floating View Switcher (Bottom Bar) -->
+  <nav class="mobile-bottom-nav">
+    <button 
+      class="nav-tab" 
+      [class.active]="mobileActiveView() === 'list'"
+      (click)="mobileActiveView.set('list')"
+    >
+      <app-icon name="layers" [size]="18"></app-icon>
+      <span>Lista de Apoio</span>
+      <span class="nav-count">{{ pointsService.filteredPoints().length }}</span>
+    </button>
+    <button 
+      class="nav-tab" 
+      [class.active]="mobileActiveView() === 'map'"
+      (click)="mobileActiveView.set('map')"
+    >
+      <app-icon name="map-pin" [size]="18"></app-icon>
+      <span>Mapa Solidário</span>
+    </button>
+  </nav>
+
+  <!-- Success Toast Notification -->
+  @if (toastMessage(); as msg) {
+    <div class="toast-notification">
+      <app-icon name="check" [size]="18"></app-icon>
+      <span>{{ msg }}</span>
+    </div>
+  }
+
+  <!-- Modals -->
+  @if (showCitySelector()) {
+    <app-city-selector-modal 
+      (close)="showCitySelector.set(false)"
+      (selected)="onCitySelected($event)"
+    ></app-city-selector-modal>
+  }
+
+  @if (showGuide()) {
+    <app-food-waste-guide-modal 
+      (close)="showGuide.set(false)"
+    ></app-food-waste-guide-modal>
+  }
+
+  @if (showAddPoint()) {
+    <app-add-point-modal 
+      (close)="showAddPoint.set(false)"
+      (created)="onPointCreated($event)"
+    ></app-add-point-modal>
+  }
+
+  @if (detailPoint(); as pt) {
+    <app-point-detail-modal 
+      [point]="pt"
+      (close)="detailPoint.set(null)"
+    ></app-point-detail-modal>
+  }
+</div>

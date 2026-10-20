@@ -1,0 +1,313 @@
+@import "leaflet/dist/leaflet.css";
+
+/* ==========================================================================
+   ALIMENTAREDE DESIGN SYSTEM - HUMANITARIAN & COMMUNITY PALETTE
+   Inspirado em tons de argila, terra fértil, colheita, linho e calor humano.
+   Livre de roxos genéricos corporativos e de estética artificial.
+   ========================================================================== */
+
+:root {
+  /* Cores Primárias: Argila, Terracota e Calor Comunitário */
+  --color-primary: #B85028;
+  --color-primary-hover: #9E3E1A;
+  --color-primary-light: #FBF1EC;
+  --color-primary-subtle: #F3DFD5;
+  --color-primary-dark: #7A2E12;
+
+  /* Colheita / Sol / Grãos (Ocre Dourado) */
+  --color-ochre: #C8751B;
+  --color-ochre-light: #FDF5E9;
+  --color-ochre-border: #F3D7A4;
+
+  /* Esperança / Alimento Fresco / Hortas Solidárias (Verde Sálvia & Oliva) */
+  --color-sage: #2D6B4E;
+  --color-sage-hover: #23543D;
+  --color-sage-light: #ECF5F0;
+  --color-sage-border: #BCD9C8;
+
+  /* Urgências Humanitárias */
+  --color-urgent-crit-text: #9E1C1C;
+  --color-urgent-crit-bg: #FDF1F1;
+  --color-urgent-crit-border: #F5B8B8;
+
+  --color-urgent-high-text: #B45309;
+  --color-urgent-high-bg: #FFF7ED;
+  --color-urgent-high-border: #FED7AA;
+
+  --color-urgent-mod-text: #236B48;
+  --color-urgent-mod-bg: #F0FDF4;
+  --color-urgent-mod-border: #BBF7D0;
+
+  /* Superfícies & Fundo Neutro Acolhedor (Linho / Areia Quente) */
+  --bg-page: #FAF7F2;
+  --bg-surface: #FFFFFF;
+  --bg-surface-elevated: #FFFFFF;
+  --bg-surface-muted: #F3EDE4;
+  --bg-surface-subtle: #ECE4D8;
+
+  /* Tipografia & Textos (Tons de Grafite Quente e Terra) */
+  --text-main: #1C1917;
+  --text-body: #44403C;
+  --text-muted: #78716C;
+  --text-subtle: #A8A29E;
+  --text-inverse: #FFFFFF;
+
+  /* Bordas Suaves e Divisores */
+  --border-light: #E7DFD5;
+  --border-subtle: #D8CEBF;
+  --border-strong: #A89E90;
+
+  /* Tipografia */
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Fraunces', Georgia, serif;
+
+  /* Raios de Curvatura Orgânicos */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-pill: 9999px;
+
+  /* Sombras Quentes Suaves */
+  --shadow-sm: 0 1px 3px rgba(35, 24, 15, 0.05), 0 1px 2px rgba(35, 24, 15, 0.03);
+  --shadow-md: 0 4px 14px -2px rgba(35, 24, 15, 0.07), 0 2px 6px -1px rgba(35, 24, 15, 0.04);
+  --shadow-lg: 0 12px 28px -4px rgba(35, 24, 15, 0.10), 0 4px 10px -2px rgba(35, 24, 15, 0.04);
+  --shadow-card: 0 2px 8px rgba(30, 20, 10, 0.04), 0 1px 2px rgba(30, 20, 10, 0.03);
+
+  /* Transições Fluidas */
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Reset Moderno */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  font-family: var(--font-sans);
+  color: var(--text-body);
+  background-color: var(--bg-page);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+/* Headings com presença humanística e elegante */
+h1, h2, h3, h4 {
+  color: var(--text-main);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.heading-editorial {
+  font-family: var(--font-serif);
+  font-feature-settings: 'swsh' 1, 'liga' 1;
+  letter-spacing: -0.02em;
+}
+
+/* Botões Estilizados */
+button {
+  font-family: var(--font-sans);
+  cursor: pointer;
+  border: none;
+  background: none;
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Custom Scrollbar com tom de linho */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-surface-muted);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-subtle);
+  border-radius: var(--radius-pill);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
+}
+
+/* Leaflet Customizações Humanitárias */
+.leaflet-container {
+  font-family: var(--font-sans) !important;
+  background: #EAE4D9 !important;
+  outline: none;
+}
+
+.leaflet-popup-content-wrapper {
+  background: var(--bg-surface) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-lg) !important;
+  border: 1px solid var(--border-light) !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+  line-height: 1.4 !important;
+}
+
+.leaflet-popup-tip {
+  background: var(--bg-surface) !important;
+}
+
+/* Marcadores Personalizados do Mapa com SVG e Pulso Humanitário */
+.custom-humanitarian-pin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.pin-bubble {
+  width: 40px;
+  height: 40px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  transition: transform var(--transition-bounce), filter var(--transition-fast);
+  border: 2px solid #FFFFFF;
+}
+
+.pin-bubble svg {
+  transform: rotate(45deg);
+  width: 20px;
+  height: 20px;
+  color: #FFFFFF;
+}
+
+.pin-bubble.category-soup_kitchen {
+  background: linear-gradient(135deg, #B85028, #943A16);
+}
+
+.pin-bubble.category-food_bank {
+  background: linear-gradient(135deg, #2D6B4E, #1F4C37);
+}
+
+.pin-bubble.category-shelter {
+  background: linear-gradient(135deg, #C8751B, #9E580C);
+}
+
+.pin-bubble.category-community_centre {
+  background: linear-gradient(135deg, #585A80, #3E4061);
+}
+
+.pin-bubble.category-collection_point {
+  background: linear-gradient(135deg, #7C5B3F, #573E29);
+}
+
+.custom-humanitarian-pin:hover .pin-bubble {
+  transform: rotate(-45deg) scale(1.18);
+  filter: brightness(1.1);
+  z-index: 1000;
+}
+
+/* Pulso animado para pontos em emergência crítica */
+.pulse-emergency::after {
+  content: '';
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(184, 80, 40, 0.45);
+  animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+  z-index: -1;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.8;
+  }
+  70% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+/* Tag & Chip Utilities */
+.badge-urgency {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.badge-urgency.critical {
+  color: var(--color-urgent-crit-text);
+  background: var(--color-urgent-crit-bg);
+  border: 1px solid var(--color-urgent-crit-border);
+}
+
+.badge-urgency.high {
+  color: var(--color-urgent-high-text);
+  background: var(--color-urgent-high-bg);
+  border: 1px solid var(--color-urgent-high-border);
+}
+
+.badge-urgency.moderate {
+  color: var(--color-urgent-mod-text);
+  background: var(--color-urgent-mod-bg);
+  border: 1px solid var(--color-urgent-mod-border);
+}
+
+/* Indicador de pulso pequeno */
+.dot-pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot-pulse.critical {
+  background-color: var(--color-urgent-crit-text);
+  box-shadow: 0 0 0 2px rgba(158, 28, 28, 0.25);
+}
+
+.dot-pulse.high {
+  background-color: var(--color-urgent-high-text);
+}
+
+.dot-pulse.moderate {
+  background-color: var(--color-urgent-mod-text);
+}
+
+/* Safe area support for notch and home bars */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .safe-padding-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}

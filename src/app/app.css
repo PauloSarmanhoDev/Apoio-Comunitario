@@ -1,0 +1,227 @@
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+  width: 100vw;
+  overflow: hidden;
+  background: var(--bg-page);
+  position: relative;
+}
+
+.main-content {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Left Pane: Directory List & Filters */
+.pane-list {
+  width: 580px;
+  max-width: 48%;
+  height: 100%;
+  background: var(--bg-page);
+  border-right: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  flex-shrink: 0;
+  z-index: 2;
+}
+
+/* Right Pane: Interactive Map */
+.pane-map {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  position: relative;
+  background: #EAE4D9;
+  z-index: 1;
+}
+
+/* Mobile Bottom Navigation (Hidden on desktop) */
+.mobile-bottom-nav {
+  display: none;
+}
+
+/* Mobile map preview card */
+.mobile-map-preview-card {
+  display: none;
+}
+
+/* Toast Notification */
+.toast-notification {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--text-main);
+  color: #FFFFFF;
+  padding: 12px 20px;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-lg);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  z-index: 3000;
+  animation: slideToast 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.toast-notification app-icon {
+  color: #4ADE80;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN FOR TABLETS AND SMARTPHONES
+   ========================================================================== */
+
+@media (max-width: 992px) {
+  .pane-list {
+    width: 100%;
+    max-width: 100%;
+    border-right: none;
+    display: none;
+  }
+
+  .pane-map {
+    display: none;
+  }
+
+  .pane-list.active-mobile {
+    display: flex;
+    padding-bottom: 70px; /* Space for bottom nav */
+  }
+
+  .pane-map.active-mobile {
+    display: block;
+  }
+
+  /* Floating Bottom Navigation Bar */
+  .mobile-bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(28, 25, 23, 0.92);
+    backdrop-filter: blur(12px);
+    border-radius: var(--radius-pill);
+    padding: 6px 8px;
+    gap: 6px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    z-index: 1500;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .nav-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 18px;
+    border-radius: var(--radius-pill);
+    color: #D6D3D1;
+    font-size: 0.84rem;
+    font-weight: 600;
+    transition: all var(--transition-fast);
+  }
+
+  .nav-tab.active {
+    background: var(--color-primary);
+    color: #FFFFFF;
+    box-shadow: 0 2px 8px rgba(184, 80, 40, 0.4);
+  }
+
+  .nav-count {
+    font-size: 0.7rem;
+    padding: 1px 6px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-pill);
+  }
+
+  /* Mobile map preview floating card */
+  .mobile-map-preview-card {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    position: absolute;
+    bottom: 80px;
+    left: 16px;
+    right: 16px;
+    background: var(--bg-surface);
+    border-radius: var(--radius-lg);
+    padding: 14px 16px;
+    box-shadow: var(--shadow-lg);
+    border: 1.5px solid var(--border-light);
+    z-index: 500;
+    animation: slideUpPreview 0.25s ease-out;
+    cursor: pointer;
+  }
+
+  .preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .preview-cat {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    text-transform: uppercase;
+  }
+
+  .preview-dist {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--text-muted);
+  }
+
+  .preview-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-main);
+  }
+
+  .preview-addr {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .preview-btn-detail {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 6px;
+    padding: 8px 12px;
+    border-radius: var(--radius-pill);
+    background: var(--color-primary);
+    color: #FFFFFF;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  .toast-notification {
+    bottom: 80px;
+    right: 16px;
+    left: 16px;
+    justify-content: center;
+  }
+}
+
+@keyframes slideToast {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideUpPreview {
+  from { transform: translateY(15px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
